@@ -30,5 +30,17 @@ public class MemberController {
         redirectUrl= StringUtils.hasText(redirectUrl)?redirectUrl:"/";
         return "redirect:"+redirectUrl;
     }
+    @GetMapping("/agree")
+    public String joinAgree(){
+        return utils.tpl("member/agree");
+    }
+    @PostMapping("/join")
+    public String join(){
+        return utils.tpl("member/join");
+    }
+    @PostMapping("/join_ps")
+    public String joinPs(){
+        return "redirect:/member/login";
+    }
 }
 
