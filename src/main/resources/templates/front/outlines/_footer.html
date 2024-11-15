@@ -1,6 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thylmleaf.org">
+<html xmlns:th="http://www.thylmleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{front/layouts/main}">
 <footer th:fragment="common">
-    <h1>사이트 하단 영역</h1>
+    <div class="ft">
+        <a href="@{front/images/ft_logo.png}"></a>
+    <div class="top"></div>
+    <div class="mid"></div>
+    <div class="bot"></div>
+</div>
 </footer>
+
 </html>
