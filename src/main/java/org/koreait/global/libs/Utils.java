@@ -16,6 +16,6 @@ public class Utils {
     }
     public String tpl(String path){
         String prefix=isMobile()?"mobile":"front";
-        return String.format("%s%s",prefix,path);
+        return String.format("%s/%s",prefix,path);
     }
 }
