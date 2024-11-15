@@ -31,15 +31,21 @@ public class MemberController {
         return "redirect:"+redirectUrl;
     }
     @GetMapping("/agree")
-    public String joinAgree(){
+    public String joinAgree(@ModelAttribute RequestAgree form){
         return utils.tpl("member/agree");
     }
     @PostMapping("/join")
-    public String join(){
+    public String join(@Valid RequestAgree agree,Errors errors, @ModelAttribute RequestJoin form){
+        if(errors.hasErrors()){
+            return utils.tpl("member/agree");
+        }
         return utils.tpl("member/join");
     }
     @PostMapping("/join_ps")
-    public String joinPs(){
+    public String joinPs(@Valid RequestJoin form, Errors errors){
+        if(errors.hasErrors()){
+            return utils.tpl("member/join");
+        }
         return "redirect:/member/login";
     }
 }
