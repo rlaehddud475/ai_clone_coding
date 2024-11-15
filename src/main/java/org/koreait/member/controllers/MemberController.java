@@ -18,11 +18,11 @@ public class MemberController {
     private final Utils utils;
 
     @GetMapping("/login")
-    public String login(@ModelAttribute RequestJoin form){
+    public String login(@ModelAttribute RequestLogin form){
         return utils.tpl("member/login");
     }
     @PostMapping("/login")
-    public String loginPs(@Valid RequestJoin form, Errors errors){
+    public String loginPs(@Valid RequestLogin form, Errors errors){
         if (errors.hasErrors()){
             return utils.tpl("member/login");
         }

@@ -1,13 +1,20 @@
 package org.koreait.member.controllers;
 
-import jakarta.validation.constraints.NotBlank;
+
 import lombok.Data;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class RequestJoin {
-    @NotBlank
+    private boolean[] requiredTerms;
+    private List<String> optionalTerms;
+
     private String email;
-    @NotBlank
+    private String name;
     private String password;
-    private String redirectUrl;
+    private String confirmPassword;
+    private String nickName;
+    private LocalDate birthDt;
 }
