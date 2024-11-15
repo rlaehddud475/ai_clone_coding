@@ -147,11 +147,7 @@ footer .top{
     box-sizing: border-box;
  
 }
-<<<<<<< HEAD
-footer .mid{
-=======
 footer .midle{
->>>>>>> a72b76ac10b878142534c9fece8b540f89b9d4c5
     padding: 20px 0;
     background-color: #1a1a1a;
     font-size: 13px;   
@@ -159,9 +155,5 @@ footer .midle{
     font-size: 12px;    
     box-sizing: border-box;
 }
-<<<<<<< HEAD
-footer .bot{ padding: 30px 0 55px;
-=======
 footer .bootom{ padding: 30px 0 55px;
->>>>>>> a72b76ac10b878142534c9fece8b540f89b9d4c5
     font-size: 12px;box-sizing: border-box; }
