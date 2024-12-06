@@ -1,0 +1,11 @@
+
+
+spring:
+  # profiles:
+  #  active: prod
+
+  # 타임리프 설정
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+
