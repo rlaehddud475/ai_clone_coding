@@ -1,3 +1,4 @@
+
 package org.koreait.global.configs;
 
 import org.modelmapper.ModelMapper;
@@ -9,11 +10,13 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class BeansConfig {
+
     @Lazy
     @Bean
-    public RestTemplate restTemplate(){
-       return new RestTemplate();
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
+
     @Lazy
     @Bean
     public ModelMapper modelMapper() {

@@ -50,7 +50,7 @@ dependencies {
 
 	implementation 'com.querydsl:querydsl-jpa:5.1.0:jakarta'
 	annotationProcessor'com.querydsl:querydsl-apt:5.1.0:jakarta'
-
+	implementation 'net.coobird:thumbnailator:0.4.20'
 	testImplementation ('com.github.javafaker:javafaker:1.0.2') { exclude module: 'snakeyaml' }
 	testImplementation group: 'org.yaml', name: 'snakeyaml', version: '2.2'
 	testImplementation 'com.h2database:h2'
