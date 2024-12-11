@@ -1,11 +1,9 @@
 package org.koreait.member.validators;
 
 import lombok.RequiredArgsConstructor;
-import org.hibernate.engine.spi.ManagedEntity;
-import org.koreait.global.vakudatirs.PasswordValidator;
+import org.koreait.global.validators.PasswordValidator;
 import org.koreait.member.controllers.RequestAgree;
 import org.koreait.member.controllers.RequestJoin;
-import org.koreait.member.entities.Member;
 import org.koreait.member.repositories.MemberRepository;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;

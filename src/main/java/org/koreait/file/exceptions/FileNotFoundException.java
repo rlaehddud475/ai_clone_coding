@@ -1,6 +1,6 @@
 package org.koreait.file.exceptions;
 
-import org.koreait.global.exceptions.script.AlertBackException;
+import org.koreait.global.exceptions.scripts.AlertBackException;
 import org.springframework.http.HttpStatus;
 
 public class FileNotFoundException extends AlertBackException {

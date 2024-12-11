@@ -10,7 +10,8 @@
                 <a href="#">
                  <div>
                      <i class="icon news"></i>
-                     <th:block th:text="#{소식}"></th:block>
+                     <th:block th:text="#{소식}">
+                     </th:block>
                  </div>
                 </a>
             </li>
@@ -43,7 +44,7 @@
     <div class="right">
         <ul>
         <li>
-            <a href="#">
+            <a th:href="@{/pokemon/list}">
                     <i class="icon catalog"></i>
                     <th:block th:text="#{포켓몬 도감}"></th:block>
             </a>

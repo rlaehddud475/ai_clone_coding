@@ -7,13 +7,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.koreait.global.entities.BaseEntity;
 
 @Data
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TrainItem {
+public class TrainItem extends BaseEntity {
     @Id @GeneratedValue
     private Long seq;
     private int item1;
@@ -27,6 +28,4 @@ public class TrainItem {
     private int item9;
     private int item10;
     private int result;
-
-
 }

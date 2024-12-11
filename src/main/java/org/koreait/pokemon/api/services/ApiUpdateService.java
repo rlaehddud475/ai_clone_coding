@@ -1,3 +1,4 @@
+
 package org.koreait.pokemon.api.services;
 
 import lombok.RequiredArgsConstructor;
@@ -5,7 +6,7 @@ import org.koreait.pokemon.api.entities.ApiPokemon;
 import org.koreait.pokemon.api.entities.ApiResponse;
 import org.koreait.pokemon.api.entities.UrlItem;
 import org.koreait.pokemon.entities.Pokemon;
-import org.koreait.pokemon.repository.PokemonRepository;
+import org.koreait.pokemon.repositories.PokemonRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -20,6 +21,7 @@ public class ApiUpdateService {
 
     private final RestTemplate tpl;
     private final PokemonRepository repository;
+
     /**
      * 1페이지당 100개씩 DB 반영
      *
@@ -27,6 +29,7 @@ public class ApiUpdateService {
      */
     public void update(int page) {
         int limit = 100;
+        //int limit = 3;
         int offset = (page - 1) * limit; // 시작 레코드 번호, 0, 100, ..
         String url = String.format("https://pokeapi.co/api/v2/pokemon?offset=%d&limit=%d", offset, limit);
         ApiResponse response = tpl.getForObject(URI.create(url), ApiResponse.class);
@@ -62,7 +65,7 @@ public class ApiUpdateService {
             // 포켓몬 한글 이름, 포켓몬 한글 설명
             String url2 = String.format("https://pokeapi.co/api/v2/pokemon-species/%d", data1.getId());
             ApiPokemon data2 = tpl.getForObject(URI.create(url2), ApiPokemon.class);
-            System.out.println(data2);
+
             // 한글 이름
             String nameKr = data2.getNames().stream().filter(d -> d.getLanguage().getName().equals("ko")).map(d -> d.getName()).collect(Collectors.joining());
             pokemon.setName(nameKr);
@@ -74,7 +77,8 @@ public class ApiUpdateService {
             pokemons.add(pokemon);
         }
         /* 상세 정보 처리 E */
-repository.saveAllAndFlush(pokemons);
 
+        // DB 영구 저장 처리
+        repository.saveAllAndFlush(pokemons);
     }
 }

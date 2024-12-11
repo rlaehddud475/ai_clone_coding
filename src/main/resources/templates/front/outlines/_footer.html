@@ -1,17 +1,80 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thylmleaf.org"
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-layout:decorate="~{front/layouts/main}">
+<html xmlns:th="http://www.thymeleaf.org">
 <footer th:fragment="common">
-    <div class="ft">
-        <a th:href="@{front/images/ft_logo.png}"></a>
-    <div class="top"></div>
+    <div class="top">
+        <div class="topp">
+            <a th:href="@{/}" class="ft-logo">
+                <img th:src="@{/front/images/ft_logo.png}">
+            </a>
+            <ul class="ft-menu">
+                <li><a href="https://pokemonkorea.co.kr/company">회사소개</a><span class="ft-bar">ㅣ</span></li>
+                <li><a href="https://pokemonkorea.co.kr/business">사업내용</a><span class="ft-bar">ㅣ</span></li>
+                <li><a href="https://pokemonkorea.co.kr/partner">제휴안내</a><span class="ft-bar">ㅣ</span></li>
+                <li><a href="https://pokemonkorea.co.kr/terms">이용약관</a><span class="ft-bar">ㅣ</span></li>
+                <li><a href="https://pokemonkorea.co.kr/privacy">개인정보처리방침</a><span class="ft-bar">ㅣ</span></li>
+                <li><a href="https://pokemonkorea.co.kr/email">이메일무단수집거부</a><span class="ft-bar">ㅣ</span></li>
+                <li><a href="https://pokemonkorea.co.kr/faq">고객센터</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="middle">
+        <div class="middlee">
+            <div class="middleTit">
+                <span>(주)포켓몬코리아  경기도 용인시 수지구 신수로 801, 4층</span>
+                <span>대표이사:임재범 개인정보관리책임자:임재범 사업자등록번호:113-86-07676</span>
+            </div>
+            <ul class="sns">
+                <li>
+                    <a href="https://instagram.com/pokemon_korea_official?igshid=OGQ5ZDc2ODk2ZA==">
+                        <img th:src="@{/front/images/icon_insta.png}">
+                        <i class="icon-insta"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.youtube.com/user/PokemonKoreaInc">
+                        <img th:src="@{/front/images/icon_youtube.png}">
+                        <i class="icon-youtube"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://x.com/PokemonKoreaInc">
+                        <img th:src="@{/front/images/icon_twitter.png}">
+                        <i class="icon-twitter"></i>
+                    </a>
+                </li>
 
-    <div class="mid"></div>
-    <div class="bot"></div>
-
-
-</div>
+                <li>
+                    <a href="https://www.tiktok.com/@pokemon_kor">
+                        <img th:src="@{/front/images/icon_tiktok.png}">
+                        <i class="icon-tiktok"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.pokemonstore.co.kr">
+                        <img th:src="@{/front/images/icon_pokemon.png}">
+                        <i class="icon-pokemon"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="bottomm">
+            <div class="bottom-left">
+                <span>고객센터</span>
+                <span>운영시간:평일 15시 ~ 18시</span>
+                <span>031-272-0108</span>
+                <span>카드 게임 및 카드 게임 이벤트:1588-4273</span>
+                <span>webmaster@pokemonkorea.co.kr</span>
+                <span>당사에서는 Pokemon GO 관련 문의는 대응하지 않습니다.</span>
+            </div>
+            <div class="right">
+                <span>©2024 Pokémon. ©1995-2024 Nintendo/Creatures Inc./GAME FREAK inc.</span>
+                <span>©Nintendo, Creatures, GAME FREAK, TV Tokyo, ShoPro, JR Kikaku. ©Pokémon. ©1998-2020 PIKACHU PROJECT.</span>
+                <span>포켓몬스터, 포켓몬, Pokémon, 몬스터볼, Nintendo Switch, Nintendo 3DS, Nintendo DS는 Nintendo의 상표입니다.</span>
+                <span class="right-bot">본 사이트의 콘텐츠에 대한 무단 복제 및 도용을 금하며 이를 어길 시 법적 조치를 받을 수 있습니다.</span>
+            </div>
+        </div>
+    </div>
 </footer>
-
 </html>

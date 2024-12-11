@@ -10,7 +10,6 @@ import org.koreait.member.constants.Gender;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
 public class RequestJoin extends RequestAgree {

@@ -1,7 +1,14 @@
 server:
   port: 3000
-
+  servlet:
+    session:
+      cookie.name: bfb4c74f0
 spring:
+
+  data:
+    redis:
+      host: ${redis.host}
+      port: ${redis.port}
   # profiles:
   #  active: prod
 

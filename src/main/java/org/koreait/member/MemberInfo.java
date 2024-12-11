@@ -49,7 +49,7 @@ public class MemberInfo implements UserDetails {
     @Override
     public boolean isCredentialsNonExpired() {
 
-        LocalDateTime credentialChangedAt=member.getCredentialChangeAt();
+        LocalDateTime credentialChangedAt=member.getCredentialChangedAt();
 
     return credentialChangedAt !=null && credentialChangedAt.isAfter(LocalDateTime.now().minusMonths(1L));
     }

@@ -1,6 +1,4 @@
-
-
-* {
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@100..900&display=swap');* {
     font-family: "Noto Sans KR", sans-serif;
     box-sizing: border-box;
     outline: none;
@@ -8,42 +6,33 @@
 }
 a{
 background-color: transparent
-    color: inherit;
+color: inherit;
 }
-.text-muted {
-     color: #767676 !important;
- }
-li{
+
+.list{
     list-style: none;
-    padding:30px;
     display:block;
     max-width: 50%;
+     display:flex;
+     flex-direction: row;
+     align-item: center;
+max-width: 991px
+margin: 0 auto;
     }
-ul{
-display: block;
-    list-style-type: disc;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    padding-inline-start: 40px;
-    unicode-bidi: isolate;
-    max-width: 991px
+
+a:-webkit-any-link {
+color: -webkit-link;
+cursor: pointer;
 }
-    a:-webkit-any-link {
-          color: -webkit-link;
-          cursor: pointer;
-      }
-      h3 {
-          display: block;
-          font-size: 1.17em;
-          margin-block-start: 1em;
-          margin-block-end: 1em;
-          margin-inline-start: 0px;
-          margin-inline-end: 0px;
-          font-weight: bold;
-          unicode-bidi: isolate;
-      }
+h3 {
+display: block;
+font-size: 1.17em;
+margin-block-start: 1em;
+margin-block-end: 1em;
+margin-inline-start: 0px;
+margin-inline-end: 0px;
+font-weight: bold;
+}
 
 img {
     overflow-clip-margin: content-box;
@@ -51,20 +40,17 @@ img {
     vertical-align: top;
 }
 .tumb-wrp>img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     max-width: 100%;
     height: auto;
+
 }
 
-     .bx-txt {
-      position: relative;
-              height: 82px;
-              padding: 0;
-              background: transparent;
+.bx-txt {
+position: relative;
+height: 82px;
+padding: 0;
+background: transparent;
 
-         text-align: center;
+text-align: center;
 
-     }
+}
