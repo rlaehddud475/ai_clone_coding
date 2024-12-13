@@ -1,3 +1,4 @@
+
 package org.koreait.pokemon.test;
 
 import org.junit.jupiter.api.Test;
@@ -5,17 +6,15 @@ import org.koreait.pokemon.api.services.ApiUpdateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-
 @SpringBootTest
-
 public class ApiTest02 {
     @Autowired
     private ApiUpdateService service;
 
     @Test
-    void updateTest1(){
-        service.update(1);
-        service.update(2);
+    void updateTest1() {
+        for (int i = 1; i <= 6; i   ++) {
+            service.update(i);
+        }
     }
-
 }

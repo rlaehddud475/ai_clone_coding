@@ -10,14 +10,22 @@ color: inherit;
 }
 
 .list{
+position: absolute;
+    top: 50%;
+    left:43%;
+    transform: translate(-50%, -50%);
     list-style: none;
     display:block;
-    max-width: 50%;
      display:flex;
      flex-direction: row;
      align-item: center;
-max-width: 991px
+     margin-right:20px;
+    justify-content:space-between;
+    flex-warp:warp;
+max-width:1000px;
+
 margin: 0 auto;
+
     }
 
 a:-webkit-any-link {
@@ -40,7 +48,7 @@ img {
     vertical-align: top;
 }
 .tumb-wrp>img {
-    max-width: 100%;
+        width:300px;
     height: auto;
 
 }
@@ -50,7 +58,9 @@ position: relative;
 height: 82px;
 padding: 0;
 background: transparent;
-
+font-size: 12px;
+font-weight: 400;
 text-align: center;
+width:300px;
 
 }

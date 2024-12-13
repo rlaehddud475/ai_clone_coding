@@ -3,9 +3,12 @@ package org.koreait.mypage.controllers;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.koreait.global.annotations.ApplyErrorPage;
 import org.koreait.global.libs.Utils;
+import org.koreait.member.MemberInfo;
 import org.koreait.member.entities.Member;
 import org.koreait.member.libs.MemberUtil;
+import org.koreait.member.services.MemberInfoService;
 import org.koreait.member.services.MemberUpdateService;
 import org.koreait.mypage.validators.ProfileValidator;
 import org.modelmapper.ModelMapper;
@@ -13,24 +16,26 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @Controller
+@ApplyErrorPage
 @RequestMapping("/myPage")
 @RequiredArgsConstructor
+@SessionAttributes("profile")
 public class MyPageController {
     private final Utils utils;
     private final MemberUtil memberUtil;
     private final ModelMapper modelMapper;
     private final MemberUpdateService updateService;
     private final ProfileValidator profileValidator;
+    private final MemberInfoService infoService;
+
     @ModelAttribute("profile")
     public Member getMember() {
         return memberUtil.getMember();
@@ -48,22 +53,21 @@ public class MyPageController {
         return utils.tpl("myPage/index");
     }
 
-
     @GetMapping("/profile")
     public String profile(Model model) {
         commonProcess("profile", model);
 
         Member member = memberUtil.getMember();
-        RequestProfile form=modelMapper.map(member, RequestProfile.class);
-        String optionalTerms= member.getOptionalTerms();
-        if (StringUtils.hasText(optionalTerms)){
-        form.setOptionalTerms(Arrays.stream(optionalTerms.split("||")).toList());
+        RequestProfile form = modelMapper.map(member, RequestProfile.class);
+        String optionalTerms = member.getOptionalTerms();
+        if (StringUtils.hasText(optionalTerms)) {
+            form.setOptionalTerms(Arrays.stream(optionalTerms.split("\\|\\|")).toList());
         }
+
         model.addAttribute("requestProfile", form);
 
         return utils.tpl("myPage/profile");
     }
-
 
     @PatchMapping("/profile")
     public String updateProfile(@Valid RequestProfile form, Errors errors, Model model) {
@@ -77,8 +81,22 @@ public class MyPageController {
 
         updateService.process(form);
 
+        // 프로필 속성 변경
+        model.addAttribute("profile", memberUtil.getMember());
+
         return "redirect:/myPage"; // 회원 정보 수정 완료 후 마이페이지 메인 이동
     }
+
+    @ResponseBody
+    @GetMapping("/refresh")
+    public void refresh(Principal principal, Model model) {
+
+        MemberInfo memberInfo = (MemberInfo) infoService.loadUserByUsername(principal.getName());
+        memberUtil.setMember(memberInfo.getMember());
+
+        model.addAttribute("profile", memberInfo.getMember());
+    }
+
     /**
      * 컨트롤러 공통 처리 영역
      *
@@ -94,6 +112,7 @@ public class MyPageController {
 
         if (mode.equals("profile")) { // 회원정보 수정
             addCommonScript.add("fileManager");
+            addCommonScript.add("address");
             addScript.add("myPage/profile");
             pageTitle = utils.getMessage("회원정보_수정");
         }

@@ -1,4 +1,4 @@
 python:
-  run.path: ${python.run}
-  script.path: ${python.script}
+  run.path: ${python.run.path}
+  script.path: ${python.script.path}
   data.url: ${dl.data.url}

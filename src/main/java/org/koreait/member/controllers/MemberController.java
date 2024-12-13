@@ -6,8 +6,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.koreait.global.annotations.ApplyErrorPage;
 import org.koreait.global.libs.Utils;
+import org.koreait.member.MemberInfo;
+import org.koreait.member.libs.MemberUtil;
+import org.koreait.member.services.MemberInfoService;
 import org.koreait.member.services.MemberUpdateService;
 import org.koreait.member.validators.JoinValidator;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -15,19 +19,23 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
-@ApplyErrorPage
+
 @Slf4j
 @Controller
+@ApplyErrorPage
 @RequestMapping("/member")
 @RequiredArgsConstructor
 @SessionAttributes({"requestAgree", "requestLogin"})
 public class MemberController {
 
     private final Utils utils;
+    private final MemberUtil memberUtil;
     private final JoinValidator joinValidator; // 회원 가입 검증
     private final MemberUpdateService updateService; // 회원 가입 처리
+    private final MemberInfoService infoService; // 회원 정보 조회
 
     @ModelAttribute("requestAgree")
     public RequestAgree requestAgree() {
@@ -52,7 +60,7 @@ public class MemberController {
         if (form.getErrorCodes() != null) { // 검증 실패
             form.getErrorCodes().stream().map(s -> s.split("_"))
                     .forEach(s -> {
-                        if (s.length>1) {
+                        if (s.length > 1) {
                             errors.rejectValue(s[1], s[0]);
                         } else {
                             errors.reject(s[0]);
@@ -62,6 +70,7 @@ public class MemberController {
 
         return utils.tpl("member/login");
     }
+
 
     /**
      * 회원가입 약관 동의
@@ -125,6 +134,15 @@ public class MemberController {
         return "redirect:/member/login";
     }
 
+    @ResponseBody
+    @GetMapping("/refresh")
+    @PreAuthorize("isAuthenticated()")
+    public void refresh(Principal principal) {
+
+        MemberInfo memberInfo = (MemberInfo) infoService.loadUserByUsername(principal.getName());
+        memberUtil.setMember(memberInfo.getMember());
+    }
+
     /**
      * 공통 처리 부분
      *
@@ -163,6 +181,4 @@ public class MemberController {
         // front 스크립트
         model.addAttribute("addScript", addScript);
     }
-
-
 }

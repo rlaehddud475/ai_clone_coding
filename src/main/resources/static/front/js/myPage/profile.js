@@ -35,4 +35,11 @@ function callbackFileUpload(files) {
 
         el.innerHTML = `<img src='${file.thumbUrl}&width=250&height=350'>`;
     }
+    const{ajaxLoad}=commonLib;
+    ajaxLoad("/myPage/refresh");
+
+    function callbackAddressSearch({zipCode, address}) {
+        frmProfile.zipCode.value = zipCode;
+        frmProfile.address.value = address;
+    }
 }
