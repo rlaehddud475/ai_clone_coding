@@ -1,10 +1,10 @@
-
 spring:
+  # 레디스 설정
   data:
     redis:
       host: localhost
       port: 6379
-  # profiles:
+
   # 데이터 베이스 설정
   datasource:
     driverClassName: org.h2.Driver
@@ -13,8 +13,7 @@ spring:
     password:
   jpa:
     hibernate:
-      ddlAuto: create
-
+      ddlAuto: update
 
 # 파일 업로드 경로
 file:
