@@ -25,10 +25,10 @@ import java.util.List;
 
 @Controller
 @ApplyErrorPage
-@RequestMapping("/myPage")
+@RequestMapping("/mypage")
 @RequiredArgsConstructor
 @SessionAttributes("profile")
-public class MyPageController {
+public class MypageController {
     private final Utils utils;
     private final MemberUtil memberUtil;
     private final ModelMapper modelMapper;
@@ -43,14 +43,14 @@ public class MyPageController {
 
     @ModelAttribute("addCss")
     public List<String> addCss() {
-        return List.of("myPage/style");
+        return List.of("mypage/style");
     }
 
     @GetMapping
     public String index(Model model) {
         commonProcess("main", model);
 
-        return utils.tpl("myPage/index");
+        return utils.tpl("mypage/index");
     }
 
     @GetMapping("/profile")
@@ -66,7 +66,7 @@ public class MyPageController {
 
         model.addAttribute("requestProfile", form);
 
-        return utils.tpl("myPage/profile");
+        return utils.tpl("mypage/profile");
     }
 
     @PatchMapping("/profile")
@@ -76,7 +76,7 @@ public class MyPageController {
         profileValidator.validate(form, errors);
 
         if (errors.hasErrors()) {
-            return utils.tpl("myPage/profile");
+            return utils.tpl("mypage/profile");
         }
 
         updateService.process(form);
@@ -84,7 +84,7 @@ public class MyPageController {
         // 프로필 속성 변경
         model.addAttribute("profile", memberUtil.getMember());
 
-        return "redirect:/myPage"; // 회원 정보 수정 완료 후 마이페이지 메인 이동
+        return "redirect:/mypage"; // 회원 정보 수정 완료 후 마이페이지 메인 이동
     }
 
     @ResponseBody
@@ -113,7 +113,7 @@ public class MyPageController {
         if (mode.equals("profile")) { // 회원정보 수정
             addCommonScript.add("fileManager");
             addCommonScript.add("address");
-            addScript.add("myPage/profile");
+            addScript.add("mypage/profile");
             pageTitle = utils.getMessage("회원정보_수정");
         }
 

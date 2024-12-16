@@ -28,9 +28,12 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
 
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-String redirectUrl=request.getContextPath() + "/member/login";
+
         form.setEmail(email);
         form.setPassword(password);
+
+        String redirectUrl = request.getContextPath() + "/member/login";
+
         // 아이디 또는 비밀번호를 입력하지 않은 경우, 아이디로 조회 X, 비번이 일치하지 않는 경우
         if (exception instanceof BadCredentialsException) {
             List<String> errorCodes = Objects.requireNonNullElse(form.getErrorCodes(), new ArrayList<>());
@@ -42,14 +45,16 @@ String redirectUrl=request.getContextPath() + "/member/login";
             if (!StringUtils.hasText(password)) {
                 errorCodes.add("NotBlank_password");
             }
-            if (errorCodes.isEmpty()){
+
+
+            if (errorCodes.isEmpty()) {
                 errorCodes.add("Failure.validate.login");
             }
-            form.setErrorCodes(errorCodes);
-        } else if (exception instanceof CredentialsExpiredException) {
-           redirectUrl=request.getContextPath()+"/member/password/change";
 
-        } else if (exception instanceof DisabledException) {
+            form.setErrorCodes(errorCodes);
+        } else if (exception instanceof CredentialsExpiredException) { //  비밀번호가 만료된 경우
+            redirectUrl = request.getContextPath() + "/member/password/change";
+        } else if (exception instanceof DisabledException) { // 탈퇴한 회원
             form.setErrorCodes(List.of("Failure.disabled.login"));
         }
 
