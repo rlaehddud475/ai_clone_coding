@@ -54,13 +54,12 @@ img {
 }
 
 .bx-txt {
-position: relative;
-height: 82px;
-padding: 0;
-background: transparent;
-font-size: 12px;
-font-weight: 400;
-text-align: center;
-width:300px;
-
+    position: relative;
+    height: 82px;
+    padding: 0;
+    background: transparent;
+    font-size: 12px;
+    font-weight: 400;
+    text-align: center;
+    width:300px;
 }
