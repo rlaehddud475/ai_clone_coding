@@ -19,8 +19,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
-@Autowired
-private MemberInfoService infoService;
+
+    @Autowired
+    private MemberInfoService memberInfoService;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
@@ -65,12 +67,18 @@ private MemberInfoService infoService;
         });
 
         /* 인가 설정 E */
+
+        /* 자동 로그인 설정 S */
         http.rememberMe(c -> {
             c.rememberMeParameter("autoLogin")
                     .tokenValiditySeconds(60 * 60 * 24 * 30) // 자동 로그인을 유지할 시간, 기본값 14일
-                    .userDetailsService(infoService)
+                    .userDetailsService(memberInfoService)
                     .authenticationSuccessHandler(new LoginSuccessHandler());
         });
+        /* 자동 로그인 설정 E */
+
+        http.headers(c -> c.frameOptions(o -> o.sameOrigin()));
+
         return http.build();
     }
 

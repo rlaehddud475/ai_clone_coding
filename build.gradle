@@ -31,6 +31,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.session:spring-session-data-redis'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
 
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 	implementation 'org.modelmapper:modelmapper:3.2.1'
@@ -50,7 +52,6 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'
-	implementation 'org.springframework.boot:spring-boot-starter-mail'
 
 	implementation 'com.querydsl:querydsl-jpa:5.1.0:jakarta'
 	annotationProcessor'com.querydsl:querydsl-apt:5.1.0:jakarta'
@@ -65,7 +66,6 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
-	jvmArgs '-Xshare:off'
 }
 
 def querydslDir = layout.buildDirectory.dir("generated/querydsl").get().asFile

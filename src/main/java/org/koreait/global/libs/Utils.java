@@ -2,6 +2,7 @@
 package org.koreait.global.libs;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.koreait.file.entities.FileInfo;
 import org.koreait.file.services.FileInfoService;
@@ -30,7 +31,7 @@ public class Utils {
         String pattern = ".*(iPhone|iPod|iPad|BlackBerry|Android|Windows CE|LG|MOT|SAMSUNG|SonyEricsson).*";
 
 
-        return ua.matches(pattern);
+        return StringUtils.hasText(ua) && ua.matches(pattern);
     }
 
     /**
@@ -155,12 +156,46 @@ public class Utils {
             className = Objects.requireNonNullElse(className, "image");
             if (mode.equals("background")) { // 배경 이미지
 
-                return String.format("<div style='width: %dpx; height: %dpx; background:url(\'%s\') no-repeat center center; background-size:cover;' class='%s'></div>", width, height, imageUrl, className);
+                return String.format("<div style='width: %dpx; height: %dpx; background:url(\"%s\") no-repeat center center; background-size:cover;' class='%s'></div>", width, height, imageUrl, className);
             } else { // 이미지 태그
                 return String.format("<img src='%s' class='%s'>", imageUrl, className);
             }
         } catch (Exception e) {}
 
         return "";
+    }
+
+    /**
+     * 메세지를 세션쪽에 저장해서 임시 팝업으로 띄운다.
+     *
+     * @param message
+     */
+    public void showSessionMessage(String message) {
+        HttpSession session = request.getSession();
+        session.setAttribute("showMessage", message);
+    }
+
+    public void removeSessionMessage() {
+        HttpSession session = request.getSession();
+        session.removeAttribute("showMessage");
+    }
+
+    public String getParam(String name) {
+        return request.getParameter(name);
+    }
+
+    public String[] getParams(String name) {
+        return request.getParameterValues(name);
+    }
+
+    /**
+     *  줄개행 문자(\n 또는 \r\n)를 br 태그로 변환
+     *
+     * @param text
+     * @return
+     */
+    public String nl2br(String text) {
+        return text.replaceAll("\\r", "")
+                .replaceAll("\\n", "<br>");
     }
 }
