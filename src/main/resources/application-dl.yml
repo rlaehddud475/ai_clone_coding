@@ -1,4 +1,7 @@
+
 python:
   run.path: ${python.run.path}
   script.path: ${python.script.path}
+  script2.path: ${python.script2.path}
+  bert.path: ${python.bert.path}
   data.url: ${dl.data.url}

@@ -16,6 +16,7 @@ import org.koreait.member.repositories.MemberRepository;
 import org.koreait.mypage.controllers.RequestProfile;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -77,7 +78,9 @@ public class MemberUpdateService {
     }
 
     public void process(RequestProfile form, List<Authority> authorities) {
-        Member member = memberUtil.getMember(); // 로그인한 사용자의 정보
+        String email = form.getEmail();
+        Member member = memberUtil.isAdmin() && StringUtils.hasText(email) ? memberRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(email)) : memberUtil.getMember(); // 로그인한 사용자의 정보
+
         member.setName(form.getName());
         member.setNickName(form.getNickName());
         member.setBirthDt(form.getBirthDt());
@@ -116,10 +119,12 @@ public class MemberUpdateService {
         save(member, _authorities);
 
         // 로그인 회원 정보 업데이트
-        Member _member = memberRepository.findByEmail(member.getEmail()).orElse(null);
-        if (_member != null) {
-            infoService.addInfo(_member);
-            session.setAttribute("member", _member);
+        if (!StringUtils.hasText(email)) {
+            Member _member = memberRepository.findByEmail(member.getEmail()).orElse(null);
+            if (_member != null) {
+                infoService.addInfo(_member);
+                session.setAttribute("member", _member);
+            }
         }
     }
 
