@@ -36,7 +36,7 @@ commonLib.ajaxLoad = function(url, callback, method = 'GET', data, headers, isTe
     const { getMeta } = commonLib;
     const csrfHeader = getMeta("_csrf_header");
     const csrfToken = getMeta("_csrf");
-    url = /^http[s]?:/.test(url) ? url : getMeta("rootUrl") + url.replace("/", "");
+    url = /^http[s]?:/.test(url) ? url : commonLib.url(url);
 
     headers = headers ?? {};
     headers[csrfHeader] = csrfToken;
@@ -159,6 +159,39 @@ commonLib.popupClose = function() {
     layerEls.forEach(el => el.parentElement.removeChild(el));
 };
 
+/**
+* 위지윅 에디터 로드
+*
+*/
+commonLib.loadEditor = function(id, height = 350) {
+
+    if (typeof ClassicEditor === 'undefined' || !id) {
+        return;
+    }
+
+    return new Promise((resolve, reject) => {
+        (async() => {
+            try {
+                const editor = await ClassicEditor.create(document.getElementById(id));
+                resolve(editor);
+                editor.editing.view.change((writer) => {
+                    writer.setStyle(
+                           "height",
+                           `${height}px`,
+                           editor.editing.view.document.getRoot()
+                        );
+                });
+
+            } catch (err) {
+                console.error(err);
+
+                reject(err);
+            }
+        })();
+    });
+
+};
+
 window.addEventListener("DOMContentLoaded", function() {
     // 체크박스 전체 토글 기능 S
     const checkAlls = document.getElementsByClassName("check-all");
@@ -176,4 +209,14 @@ window.addEventListener("DOMContentLoaded", function() {
         });
     }
     // 체크박스 전체 토글 기능 E
+
+    // 팝업 버튼 클릭 처리 S
+    const showPopups = document.getElementsByClassName("show-popup");
+    for (const el of showPopups) {
+        el.addEventListener("click", function() {
+            const { url, width, height } = this.dataset;
+            commonLib.popup(url, width, height);
+        });
+    }
+    // 팝업 버튼 클릭 처리 E
 });
