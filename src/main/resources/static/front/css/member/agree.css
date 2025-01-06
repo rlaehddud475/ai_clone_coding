@@ -1,0 +1,26 @@
+/* 기본적으로 약관 내용은 숨김 */
+.terms-content {
+    display: none;
+    margin-top: 10px;
+    padding-left: 20px;
+}
+
+/* 제목 버튼 스타일 */
+.toggle-terms-btn {
+    background: none;
+    border: none;
+    color: #007bff;
+    font-weight: bold;
+    text-align: left;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.toggle-terms-btn:hover {
+    text-decoration: underline;
+}
+
+/* 클릭 시 펼쳐지는 스타일 */
+.terms-content.show {
+    display: block;
+}
