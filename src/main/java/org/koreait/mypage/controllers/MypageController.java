@@ -1,3 +1,4 @@
+
 package org.koreait.mypage.controllers;
 
 import jakarta.servlet.http.HttpSession;
@@ -47,11 +48,6 @@ public class MypageController {
     @ModelAttribute("profile")
     public Member getMember() {
         return memberUtil.getMember();
-    }
-
-    @ModelAttribute("addCss")
-    public List<String> addCss() {
-        return List.of("mypage/style");
     }
 
     @GetMapping

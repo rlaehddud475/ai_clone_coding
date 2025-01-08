@@ -1,6 +1,9 @@
 
 package org.koreait.message.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.koreait.file.constants.FileStatus;
@@ -9,6 +12,7 @@ import org.koreait.global.annotations.ApplyErrorPage;
 import org.koreait.global.libs.Utils;
 import org.koreait.global.paging.ListData;
 import org.koreait.message.entities.Message;
+import org.koreait.message.services.MessageDeleteService;
 import org.koreait.message.services.MessageInfoService;
 import org.koreait.message.services.MessageSendService;
 import org.koreait.message.services.MessageStatusService;
@@ -19,9 +23,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 @ApplyErrorPage
@@ -35,6 +37,8 @@ public class MessageController {
     private final MessageSendService sendService;
     private final MessageInfoService infoService;
     private final MessageStatusService statusService;
+    private final MessageDeleteService deleteService;
+    private final ObjectMapper om;
 
     @ModelAttribute("addCss")
     public List<String> addCss() {
@@ -61,7 +65,7 @@ public class MessageController {
      * @return
      */
     @PostMapping
-    public String process(@Valid RequestMessage form, Errors errors, Model model) {
+    public String process(@Valid RequestMessage form, Errors errors, Model model, HttpServletRequest request) {
         commonProcess("send", model);
 
         messageValidator.validate(form, errors);
@@ -75,9 +79,27 @@ public class MessageController {
             return utils.tpl("message/form");
         }
 
-        sendService.process(form);
+        Message message = sendService.process(form);
+        long totalUnRead = infoService.totalUnRead(form.getEmail());
+        Map<String, Object> data = new HashMap<>();
+        data.put("item", message);
+        data.put("totalUnRead", totalUnRead);
 
-        return "redirect:/message/list";
+        StringBuffer sb = new StringBuffer();
+
+        try {
+            String json = om.writeValueAsString(data);
+            sb.append(String.format("if (typeof webSocket != undefined) { webSocket.onopen = () => webSocket.send('%s'); }", json));
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        sb.append(String.format("location.replace('%s');",request.getContextPath() + "/message/list"));
+
+        model.addAttribute("script", sb.toString());
+
+        return "common/_execute_script";
     }
 
     /**
@@ -99,7 +121,7 @@ public class MessageController {
     }
 
     @GetMapping("/view/{seq}")
-    public String view(@PathVariable("seq") Long seq, Model model) {
+    public String view(@PathVariable("seq") Long seq, Model model, HttpServletRequest request) {
         commonProcess("view", model);
 
         Message item = infoService.get(seq);
@@ -107,11 +129,16 @@ public class MessageController {
 
         statusService.change(seq); // 열람 상태로 변경
 
+        String referer = Objects.requireNonNullElse(request.getHeader("referer"),"");
+        model.addAttribute("mode", referer.contains("mode=send") ? "send":"receive");
+
         return utils.tpl("message/view");
     }
 
-    @DeleteMapping
-    public String delete(@RequestParam(name="seq", required = false) List<String> seq) {
+    @GetMapping("/delete/{seq}")
+    public String delete(@PathVariable("seq") Long seq, @RequestParam(name="mode", defaultValue = "receive") String mode) {
+
+        deleteService.process(seq, mode);
 
         return "redirect:/message/list";
     }
