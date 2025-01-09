@@ -10,7 +10,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 @Lazy
-@Component
+@Component("adminBoardValidator")
 @RequiredArgsConstructor
 public class BoardValidator implements Validator {
 
