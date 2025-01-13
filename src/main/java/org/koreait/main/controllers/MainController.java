@@ -1,3 +1,4 @@
+
 package org.koreait.main.controllers;
 
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,8 @@ public class MainController {
 
     @GetMapping
     public String index(Model model) {
+
+
         return utils.tpl("main/index");
     }
 }

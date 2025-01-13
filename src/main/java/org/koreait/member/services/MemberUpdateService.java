@@ -1,3 +1,4 @@
+
 package org.koreait.member.services;
 
 import jakarta.servlet.http.HttpSession;
@@ -56,9 +57,15 @@ public class MemberUpdateService {
         }
 
         // 비밀번호 해시화 - BCrypt
-        String hash = passwordEncoder.encode(form.getPassword());
-        member.setPassword(hash);
-        member.setCredentialChangedAt(LocalDateTime.now());
+        if (!form.isSocial()) {
+            String hash = passwordEncoder.encode(form.getPassword());
+            member.setPassword(hash);
+            member.setCredentialChangedAt(LocalDateTime.now());
+        }
+
+        // 소셜 로그인 관련
+        member.setSocialChannel(form.getSocialChannel());
+        member.setSocialToken(form.getSocialToken());
 
         // 회원 권한
         Authorities auth = new Authorities();
@@ -108,10 +115,10 @@ public class MemberUpdateService {
         List<Authorities> _authorities = null;
         if (authorities != null && memberUtil.isAdmin()) {
             _authorities = authorities.stream().map(a -> {
-               Authorities auth = new Authorities();
-               auth.setAuthority(a);
-               auth.setMember(member);
-               return auth;
+                Authorities auth = new Authorities();
+                auth.setAuthority(a);
+                auth.setMember(member);
+                return auth;
             }).toList();
         }
 
@@ -145,8 +152,8 @@ public class MemberUpdateService {
             QAuthorities qAuthorities = QAuthorities.authorities;
             List<Authorities> items = (List<Authorities>) authoritiesRepository.findAll(qAuthorities.member.eq(member));
             if (items != null) {
-               authoritiesRepository.deleteAll(items);
-               authoritiesRepository.flush();
+                authoritiesRepository.deleteAll(items);
+                authoritiesRepository.flush();
             }
 
 

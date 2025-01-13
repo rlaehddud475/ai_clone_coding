@@ -1,3 +1,4 @@
+
 package org.koreait.mypage.controllers;
 
 import jakarta.validation.constraints.NotBlank;
@@ -47,4 +48,7 @@ public class RequestProfile {
     private List<Authority> authorities;
 
     private FileInfo profileImage;
+
+    private String kakaoLoginConnectUrl; // 카카오 로그인 연결 URL
+    private String kakaoLoginDisconnectUrl; // 카카오 로그인 연결 해제 URL
 }
